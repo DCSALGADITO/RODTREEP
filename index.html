@@ -88,7 +88,7 @@
             </div>
         </section>
 
-        <section id="album" class="section album-section">
+        <section id="album" class="album-section">
             <h2 class="album-title">Album Photo</h2>
             <div class="album-wrapper inactive" id="album-wrapper">
                 <button class="exit-album-btn" id="exit-album-btn">Quitter l'exploration</button>
@@ -104,7 +104,7 @@
                                 <path d="M12 5V19M5 12H19" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </label>
-                        <input type="file" id="photo-upload" accept="image/*" multiple style="display: none;">
+                        <input type="file" id="photo-upload" accept="image/*, video/*" multiple style="display: none;">
                     </div>
                     <!-- Les photos seront ajoutées ici dynamiquement -->
                 </div>
@@ -162,6 +162,7 @@
         </div>
     </footer>
 
+    <script src="supabase.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
