@@ -1,10 +1,10 @@
 :root {
-    --bg-color: #DBEAFE;
-    --text-color: #111827;
-    --primary-color: #FFA2A2;
-    --secondary-color: #CB4335;
-    --nav-bg: rgba(219, 234, 254, 0.7);
-    --border-color: rgba(17, 24, 39, 0.1);
+    --bg-color: #FAF6F0; /* Sable / Coquille d'œuf - ultra lumineux et frais */
+    --hero-bg: #F0544F; /* Rouge vibrant / Corail */
+    --text-color: #2D3748; /* Gris sombre élégant pour un fond clair */
+    --primary-color: #0EA5E9; /* Bleu Ciel Vibrant (Sky Blue) - Ultra frais et premium */
+    --nav-bg: rgba(240, 84, 79, 0.95); /* Rouge vibrant avec légère transparence */
+    --border-color: rgba(14, 165, 233, 0.3); /* Bordures bleues subtiles */
 }
 
 * {
@@ -25,76 +25,106 @@ body {
     overflow-x: hidden;
 }
 
-/* NAVBAR */
+/* NAVBAR / SIDEBAR */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 80px; /* Toujours réduite par défaut */
+    height: 100vh;
     z-index: 1000;
     background: var(--nav-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-color);
-    transition: all 0.3s ease;
+    border-right: 1px solid var(--border-color);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.navbar:hover {
+    width: 220px; /* S'ouvre uniquement au hover */
 }
 
 .navbar-container {
     display: flex;
-    align-items: center;
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 1rem 3rem;
-    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2.5rem 1.5rem;
+    height: 100%;
+    width: 220px; /* Force width so content doesn't squeeze during animation */
+}
+
+.logo {
+    margin-bottom: 3rem;
+    width: 100%;
 }
 
 .logo a {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1rem;
     text-decoration: none;
-    color: var(--text-color);
+    color: #ffffff;
     font-weight: 800;
     font-size: 1.5rem;
     letter-spacing: 2px;
 }
 
+.logo span {
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+}
+
+.navbar:not(:hover) .logo span {
+    opacity: 0;
+    pointer-events: none;
+}
+
 .nav-menu {
     display: flex;
+    flex-direction: column;
     list-style: none;
-    gap: 2rem;
-    position: absolute;
-    left: 55%;
-    transform: translateX(-50%);
+    gap: 1.5rem;
+    width: 100%;
 }
 
 .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
     text-decoration: none;
-    color: rgba(17, 24, 39, 0.8);
+    color: rgba(255, 255, 255, 0.8);
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     letter-spacing: 1px;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    padding: 0.75rem 0.5rem;
+    border-radius: 8px;
     position: relative;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0%;
-    height: 2px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    transition: width 0.3s ease;
+    white-space: nowrap;
 }
 
 .nav-link:hover, .nav-link.active {
-    color: #111827;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.2);
 }
 
-.nav-link:hover::after, .nav-link.active::after {
-    width: 100%;
+.nav-icon {
+    flex-shrink: 0;
+}
+
+.nav-text {
+    transition: opacity 0.2s ease;
+}
+
+.navbar:not(:hover) .nav-text {
+    opacity: 0;
+    pointer-events: none;
+}
+
+main, .footer {
+    padding-left: 80px;
+    transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* HAMBURGER */
@@ -116,53 +146,76 @@ body {
 
 /* HERO SECTION */
 .hero-section {
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    justify-content: flex-start;
+    text-align: left;
     position: relative;
-    padding-top: 80px;
-    background: radial-gradient(circle at center, rgba(203, 67, 53, 0.15) 0%, rgba(219, 234, 254, 1) 70%);
+    padding: 0 5%;
+    overflow: hidden;
+    background-color: #0d1117;
 }
 
 .hero-content {
     animation: fadeIn 1s ease-out;
+    position: relative;
+    z-index: 10;
+    max-width: 800px;
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.hero-content > * {
+    pointer-events: auto;
 }
 
 .hero-title {
-    font-size: clamp(3rem, 8vw, 6rem);
+    font-family: 'Jost', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7rem); /* Plus gros */
     font-weight: 800;
-    line-height: 1.1;
+    line-height: 0.95; /* Titre plus tassé et percutant */
     margin-bottom: 1.5rem;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: -1px; /* Moderne */
+}
+
+.hero-section.fullscreen-active .hero-content {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-20px);
 }
 
 .hero-subtitle {
     font-size: clamp(1.2rem, 3vw, 1.5rem);
     margin-bottom: 2.5rem;
-    color: rgba(17, 24, 39, 0.8);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .cta-button {
     display: inline-block;
-    padding: 1rem 2.5rem;
+    padding: 1rem 3rem;
     font-size: 1.1rem;
     font-weight: 600;
-    text-decoration: none;
-    color: #fff;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 50px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 15px rgba(203, 67, 53, 0.4);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: none;
 }
 
 .cta-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(203, 67, 53, 0.6);
+    transform: translateY(-3px) scale(1.02);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
 
 /* SECTIONS */
@@ -174,6 +227,46 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+#equipage {
+    background: var(--bg-color);
+    max-width: none;
+    margin: 0;
+    padding: 100px 0 4rem 0; /* Prend tout l'espace */
+    align-items: center;
+    position: relative; /* Pour la vague SVG absolue */
+}
+
+/* SHAPE DIVIDER (Vague transition Hero -> Pokedex) */
+.custom-shape-divider-top {
+    position: absolute;
+    top: -1px; /* Évite la fine ligne de démarcation */
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    z-index: 0;
+}
+.custom-shape-divider-top svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 70px;
+}
+.custom-shape-divider-top .shape-fill {
+    fill: #0d1117; /* Couleur de la section Hero qui "coule" sur le vert */
+}
+
+#equipage h2 {
+    font-family: 'Jost', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    color: var(--hero-bg); /* Corail sur fond sable = magnifique */
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+    z-index: 10;
 }
 
 .section h2 {
@@ -190,13 +283,12 @@ body {
     bottom: -10px;
     left: 0;
     width: 60px;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    background: var(--primary-color);
     border-radius: 2px;
 }
 
 .content-placeholder {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.1);
     border: 1px solid var(--border-color);
     border-radius: 20px;
     padding: 4rem;
@@ -207,7 +299,70 @@ body {
 
 .content-placeholder:hover {
     transform: translateY(-5px);
-    border-color: rgba(17, 24, 39, 0.3);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* POKEDEX GALLERY */
+.pokedex-gallery {
+    width: calc(100vw - 80px); /* Prend toute la largeur moins la sidebar */
+    margin-left: calc(50% - (100vw - 80px) / 2); /* Centre en sortant du conteneur .section */
+    display: flex; /* Layout Accordéon */
+    height: 70vh; /* Grande hauteur fixe pour l'effet de panneau */
+}
+
+.pokedex-item {
+    position: relative;
+    overflow: hidden;
+    flex: 1; /* Chaque image prend une petite tranche par défaut */
+    transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    cursor: pointer;
+}
+
+.pokedex-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center; /* Toujours centré sur le visage même quand coupé */
+    filter: grayscale(60%) contrast(120%) brightness(80%) sepia(20%); /* Filtre Épique/Cinématique */
+    transition: filter 0.6s ease;
+}
+
+.pokedex-item:hover {
+    flex: 4; /* L'image s'ouvre en grand au survol ! */
+}
+
+.pokedex-item:hover img {
+    filter: grayscale(0%) contrast(110%) brightness(100%) sepia(0%); /* La couleur revient au survol */
+}
+
+.pokedex-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+.pokedex-name {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    color: white;
+    font-family: 'Jost', sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.1;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+    z-index: 10;
+    white-space: nowrap; /* Empêche le texte de se casser sur deux lignes quand c'est très étroit */
+}
+
+.pokedex-lastname {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--primary-color);
+    letter-spacing: 2px;
 }
 
 /* ANIMATIONS */
@@ -218,43 +373,71 @@ body {
 
 /* RESPONSIVE */
 @media screen and (max-width: 968px) {
-    .hamburger {
-        display: flex;
-        z-index: 1001; /* Above nav menu */
+    .pokedex-gallery {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        flex-direction: column; /* S'empile sur mobile */
+        height: auto;
+    }
+    
+    .pokedex-item {
+        height: 20vh; /* Petite tranche horizontale sur mobile */
+    }
+
+    .pokedex-item:hover {
+        height: 50vh; /* S'ouvre en hauteur sur mobile ! */
+    }
+
+    /* Sur mobile, la sidebar devient une Bottom Bar (façon app) */
+    .navbar {
+        width: 100vw !important;
+        height: 70px !important;
+        top: auto;
+        bottom: 0;
+        border-right: none;
+        border-top: 1px solid var(--border-color);
+        flex-direction: row;
+        padding: 0;
+        z-index: 10000;
+    }
+
+    .navbar-container {
+        width: 100%;
+        height: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0 1rem;
+    }
+
+    .logo {
+        margin: 0;
+        width: auto;
+    }
+
+    .logo span, .nav-text {
+        display: none !important; /* On cache tous les textes sur mobile */
     }
 
     .nav-menu {
-        position: fixed;
-        top: 0;
-        left: -100%;
-        transform: none;
-        width: 100%;
-        height: 100vh;
-        background: var(--bg-color);
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: 0.4s ease-in-out;
-        gap: 3rem;
-    }
-
-    .nav-menu.active {
-        left: 0;
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 0;
+        margin: 0;
+        padding: 0;
     }
 
     .nav-link {
-        font-size: 1.5rem;
+        padding: 10px;
     }
 
-    /* Hamburger Animation */
-    .hamburger.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
+    main, .footer {
+        padding-left: 0 !important;
+        padding-bottom: 70px; /* Espace pour la bottom bar */
     }
-    .hamburger.active .bar:nth-child(2) {
-        opacity: 0;
-    }
-    .hamburger.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
+
+    .hamburger {
+        display: none !important;
     }
 }
 
@@ -277,7 +460,7 @@ body {
 
 
 
-.album-section.fullscreen-active {
+.hero-section.fullscreen-active {
     position: fixed;
     top: 0;
     left: 0;
@@ -286,6 +469,7 @@ body {
     margin: 0;
     padding: 0;
     z-index: 99999;
+    background-color: #0d1117;
 }
 
 .album-title {
@@ -313,21 +497,29 @@ body {
     display: block;
     margin: 10px auto 0;
     width: 60px;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    background: var(--primary-color);
     border-radius: 2px;
 }
 
 .album-wrapper {
-    flex: 1;
+    position: absolute;
+    inset: 0;
     width: 100%;
-    position: relative;
-    cursor: grab;
+    height: 100%;
+    z-index: 1;
+    cursor: default;
     background-color: transparent;
     overflow: hidden;
+    pointer-events: none;
 }
 
-.album-wrapper:active {
+/* En mode actif, le canvas intercepte tous les événements souris */
+.hero-section.fullscreen-active .album-wrapper {
+    pointer-events: all;
+    cursor: grab;
+}
+
+.hero-section.fullscreen-active .album-wrapper:active {
     cursor: grabbing;
 }
 
@@ -343,18 +535,20 @@ body {
 .photo-item {
     position: absolute;
     transform-origin: center center;
-    border-radius: 4px;
     user-select: none;
     transition: transform 0.2s ease-out;
     cursor: grab;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     overflow: hidden;
+    width: 240px;
+    height: 160px;
 }
 
-.photo-item img {
+.photo-item img,
+.photo-item video {
     display: block;
-    max-width: 300px;
-    max-height: 300px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     pointer-events: none;
 }
@@ -363,42 +557,33 @@ body {
     z-index: 5 !important;
 }
 
-.add-photo-placeholder {
+.add-photo-container {
     position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(-50%, -50%);
-    width: 180px;
-    height: 250px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 2px dashed rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
+    bottom: 40px;
+    right: 40px;
+    z-index: 100;
+}
+
+.add-photo-btn-glass {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 2;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    transition: all 0.3s ease;
-}
-
-.add-photo-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--primary-color);
     cursor: pointer;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: transform 0.3s ease, background 0.3s ease;
 }
 
-.add-photo-placeholder:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.4);
-}
-
-.add-photo-placeholder:hover .add-photo-btn {
+.add-photo-btn-glass:hover {
     transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .photo-item::after {
@@ -463,23 +648,33 @@ body {
 
 .exit-album-btn {
     position: absolute;
-    top: 40px;
-    right: 40px;
-    padding: 10px 20px;
+    bottom: 40px;
+    right: 120px; /* A gauche du bouton Ajouter (qui est à right:40px) */
+    height: 60px; /* Même hauteur que le bouton Ajouter */
+    padding: 0 25px;
+    display: none; /* Deviendra flex en fullscreen */
+    align-items: center;
     background: rgba(255, 255, 255, 0.1);
     color: white;
     text-decoration: none;
     font-family: 'Outfit', sans-serif;
+    font-weight: 600;
     border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 20px;
-    backdrop-filter: blur(5px);
+    border-radius: 30px;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     z-index: 100;
     cursor: pointer;
-    display: inline-block;
-    transition: background 0.3s;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.hero-section.fullscreen-active .exit-album-btn {
+    display: flex;
 }
 
 .exit-album-btn:hover {
+    transform: scale(1.05);
     background: rgba(255, 255, 255, 0.2);
 }
 

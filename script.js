@@ -25,16 +25,8 @@
         });
     });
 
-    window.addEventListener('scroll', () => {
-        if (!navbar) return;
-        if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(219,234,254,0.97)';
-            navbar.style.boxShadow  = '0 4px 30px rgba(0,0,0,0.07)';
-        } else {
-            navbar.style.background = 'rgba(219,234,254,0.7)';
-            navbar.style.boxShadow  = 'none';
-        }
-    });
+    // The scroll listener for navbar collapsing has been removed 
+    // since the sidebar is now permanently collapsed and only expands on hover via CSS.
 
     // Highlight active nav link on scroll
     const observer = new IntersectionObserver(entries => {
@@ -75,11 +67,12 @@ try {
 // ─── 3. CANVAS ───────────────────────────────────────────────
 (function initCanvas() {
     // Refs DOM
-    const section      = document.getElementById('album');
+    const section      = document.getElementById('hero');
     const wrapper      = document.getElementById('album-wrapper');
     const canvas       = document.getElementById('infinite-canvas');
     const uploadInput  = document.getElementById('photo-upload');
     const exitBtn      = document.getElementById('exit-album-btn');
+    const exploreBtn   = document.getElementById('explore-btn');
 
     if (!wrapper || !canvas) {
         console.error('[ROADTREEP] Éléments du canvas introuvables !');
@@ -89,57 +82,107 @@ try {
     console.log('[ROADTREEP] Canvas initialisé ✅');
 
     // État
-    let active    = true;
+    // État
+    let active    = false;
     let dragging  = false;
     let tx = 0, ty = 0;
     let ox = 0, oy = 0;          // origin de drag
     let photoCount    = 0;
     let zTop          = 10;
-    const RING_GAP    = 350;
+    const GAP_X       = 330; // Espace horizontal entre les photos (240px largeur + 90px d'espace)
+    const GAP_Y       = 250; // Espace vertical entre les photos (160px hauteur + 90px d'espace)
+
+    // Activation / Désactivation
+    const activateAlbum = () => {
+        if (active) return;
+        active = true;
+        section.classList.add('fullscreen-active');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const deactivateAlbum = (e) => {
+        if (e) e.stopPropagation();
+        active = false;
+        section.classList.remove('fullscreen-active');
+        document.body.style.overflow = '';
+        // Optionnel : on peut recentrer le canvas en quittant
+        // tx = 0; ty = 0;
+        // setTransform();
+    };
+
+    if (exploreBtn) exploreBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        activateAlbum();
+    });
+    if (exitBtn) exitBtn.addEventListener('click', deactivateAlbum);
+
+    // Clic sur le fond de la section (hors boutons) active l'exploration
+    if (section) {
+        section.addEventListener('click', (e) => {
+            if (active) return;
+            if (e.target.closest('#explore-btn')) return;
+            if (e.target.closest('#exit-album-btn')) return;
+            if (e.target.closest('.add-photo-btn-glass')) return;
+            if (e.target.closest('.hero-content')) return;
+            activateAlbum();
+        });
+    }
 
     // Helpers
     const setTransform = () => {
         canvas.style.transform = `translate(${tx}px, ${ty}px)`;
     };
 
+    // Spirale carrée : n=1 au centre, n=2 au-dessus, n=3 à droite du 2, puis carré
     const getRingPos = (n) => {
-        let ring = 1, prev = 0, cap = 8;
-        while (n > prev + cap) { 
-            prev += cap; 
-            ring++; 
-            cap = ring * 8; 
-        }
-        const idx = n - prev - 1;
-        
-        const sideLen = ring * 2;
-        const side = Math.floor(idx / sideLen);
-        const pos = idx % sideLen;
-        
-        const D = ring * RING_GAP;
-        const step = RING_GAP;
-        
-        let x = 0, y = 0;
-        
-        if (side === 0) {
-            x = -D + pos * step;
-            y = -D;
-        } else if (side === 1) {
-            x = D;
-            y = -D + pos * step;
-        } else if (side === 2) {
-            x = D - pos * step;
-            y = D;
-        } else if (side === 3) {
-            x = -D;
-            y = D - pos * step;
-        }
-        
-        // Ajout d'une toute petite variation aléatoire (optionnelle) pour faire naturel, 
-        // décommentez si besoin :
-        // x += (Math.random() - 0.5) * 20;
-        // y += (Math.random() - 0.5) * 20;
+        // Photo 1 = centre exact
+        if (n === 1) return { x: 0, y: 0 };
 
-        return { x, y };
+        // Trouver dans quel anneau on est (anneau r contient 8*r positions)
+        let ring = 1;
+        let prevTotal = 1; // nb de photos avant cet anneau
+        while (prevTotal + ring * 8 < n) {
+            prevTotal += ring * 8;
+            ring++;
+        }
+
+        const pos = n - prevTotal - 1; // 0-indexé dans l'anneau
+        const r = ring;
+
+        // Segment 1 - Top (gauche→droite) : (0,-r) → (r,-r)  = r+1 cases
+        // Segment 2 - Droite (haut→bas)  : (r,-(r-1)) → (r,r) = 2r cases
+        // Segment 3 - Bas (droite→gauche): (r-1,r) → (-r,r)  = 2r cases
+        // Segment 4 - Gauche (bas→haut)  : (-r,r-1) → (-r,-r) = 2r cases
+        // Segment 5 - Top fin            : (-(r-1),-r) → (-1,-r) = r-1 cases
+        const cTOP    = r + 1;
+        const cRIGHT  = cTOP + 2 * r;
+        const cBOTTOM = cRIGHT + 2 * r;
+        const cLEFT   = cBOTTOM + 2 * r;
+
+        let gx, gy;
+
+        if (pos < cTOP) {
+            gx = pos;
+            gy = -r;
+        } else if (pos < cRIGHT) {
+            const i = pos - cTOP;
+            gx = r;
+            gy = -(r - 1) + i;
+        } else if (pos < cBOTTOM) {
+            const i = pos - cRIGHT;
+            gx = (r - 1) - i;
+            gy = r;
+        } else if (pos < cLEFT) {
+            const i = pos - cBOTTOM;
+            gx = -r;
+            gy = (r - 1) - i;
+        } else {
+            const i = pos - cLEFT;
+            gx = -(r - 1) + i;
+            gy = -r;
+        }
+
+        return { x: gx * GAP_X, y: gy * GAP_Y };
     };
 
 
@@ -263,10 +306,6 @@ try {
             vid.muted = true;
             vid.playsInline = true;
             vid.draggable = false;
-            vid.style.maxWidth = '300px';
-            vid.style.maxHeight = '300px';
-            vid.style.objectFit = 'cover';
-            vid.style.display = 'block';
             div.appendChild(vid);
         } else {
             const img = document.createElement('img');
