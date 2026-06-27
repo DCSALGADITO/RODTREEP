@@ -360,13 +360,13 @@ main,
 #parcours {
     max-width: none;
     margin: 0;
-    padding: 2rem 0 0 0; /* Réduit pour rapprocher du Pokédex (était 6rem) */
-    width: calc(100% + 80px); /* Vraie pleine largeur (100% du main + 80px du padding gauche) */
-    margin-left: -80px; /* Colle tout à gauche de l'écran (derrière la sidebar) */
+    padding: 100px 0 4rem 0; /* Standardisé avec les autres sections (équivalent de 6rem en haut) */
+    width: calc(100% + 80px); /* Vraie pleine largeur */
+    margin-left: -80px; /* Colle tout à gauche */
     align-items: center; /* Centre le titre */
     overflow: hidden; /* Empêche de dépasser à droite */
-    min-height: auto; /* Retire la hauteur minimale forcée pour supprimer l'espace vide */
-    justify-content: flex-start; /* Aligne le contenu vers le haut */
+    min-height: 100vh; /* Rétabli pour remplir la taille de l'écran */
+    justify-content: center; /* Centre verticalement pour correspondre aux autres sections */
 }
 
 /* Date titre — haute spécificité pour ne pas être écrasée par .section h2 */
@@ -405,19 +405,24 @@ main,
     padding: 0 2rem;
 }
 
-/* MAP CONTAINER — vraie pleine largeur d'écran */
-#map-container {
-    width: 100%;        /* Prend 100% de #parcours qui est déjà full-width */
-    margin-left: 0;     /* Plus besoin de décaler, #parcours le fait déjà */
-    height: 90vh;       /* Quasiment toute la hauteur de l'écran */
-    border-radius: 0;
-    background: #FAF6F0; /* Fallback couleur sable */
-    z-index: 1;
+/* ── GEAR PATTERN (SIMPLE) ────────────────────────────────────────────── */
+.gear-pattern-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5rem; /* Descendu plus bas par rapport au texte */
+    margin-bottom: 2rem;
 }
 
-/* Cache les contrôles Leaflet pour un style épuré */
-.leaflet-control-container .leaflet-top,
-.leaflet-control-container .leaflet-bottom {
+.gear-svg {
+    width: 95vw;
+    max-width: 1400px;
+    height: auto;
+    margin-left: 10rem; /* Décalage accentué vers la droite sur ordinateur */
+}
+
+.mobile-text {
     display: none;
 }
 
@@ -508,7 +513,7 @@ main,
 }
 
 /* RESPONSIVE */
-@media screen and (max-width: 968px) {
+/* RESPONSIVE */@media screen and (max-width: 968px) {
     .pokedex-gallery {
         width: 100vw;
         margin-left: calc(50% - 50vw);
@@ -913,6 +918,35 @@ main,
 }
 
 @media screen and (max-width: 768px) {
+    .desktop-text {
+        display: none;
+    }
+    .mobile-text {
+        display: block;
+    }
+    
+    /* Rotation du schéma pommeau de vitesse pour plus d'espace sur mobile */
+    .gear-pattern-container {
+        width: 100vw;
+        height: 235vw; /* Prend la largeur de la SVG pivotée (235vw) */
+        margin-left: calc(50% - 50vw); /* Centrage absolu sur l'écran */
+        margin-top: -3rem; /* Rapproche encore plus du texte */
+        margin-bottom: 2rem;
+        overflow: hidden; /* Empêche le scroll horizontal */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .gear-svg {
+        transform: rotate(90deg);
+        width: 235vw; /* Ajusté pour laisser un petit bord et voir les villes aux extrémités */
+        max-width: none;
+        flex-shrink: 0;
+        margin-left: 0; /* Annule le décalage bureau */
+    }
+
+
+
     .footer-top {
         grid-template-columns: 1fr;
         gap: 2.5rem;

@@ -10,9 +10,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600;700;800&family=Outfit:wght@300;400;600;800&family=Syne:wght@400;600;800&display=swap"
         rel="stylesheet">
-    <!-- Leaflet CSS pour la carte -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-
+</head>
 <body>
 
     <nav class="navbar">
@@ -26,7 +24,8 @@
             <ul class="nav-menu">
                 <li class="nav-item">
                     <a href="#equipage" class="nav-link">
-                        <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10"></circle>
                             <circle cx="12" cy="12" r="3"></circle>
                             <line x1="2" y1="12" x2="9" y2="12"></line>
@@ -113,8 +112,11 @@
 
         <section id="equipage" class="section">
             <div class="custom-shape-divider-top">
-                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                    preserveAspectRatio="none">
+                    <path
+                        d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                        class="shape-fill"></path>
                 </svg>
             </div>
             <h2 style="margin-bottom: 2rem;">POKÉDEX</h2>
@@ -149,7 +151,84 @@
         <section id="parcours" class="section">
             <h2 class="date-title">31/07 - 08/08</h2>
             <h3 class="route-subtitle">DE MONTPELLIER À ELVAS</h3>
-            <div id="map-container"></div>
+            <div class="gear-pattern-container">
+                <svg viewBox="0 0 1050 400" class="gear-svg" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Lignes de guidage (Pattern H) en corail -->
+                    <g stroke="#F0544F" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                        <path d="M 100 80 L 100 320" />
+                        <path d="M 300 80 L 300 320" />
+                        <path d="M 500 80 L 500 320" />
+                        <path d="M 700 80 L 700 320" />
+                        <path d="M 900 200 L 900 320" />
+                        <path d="M 100 200 L 900 200" />
+                    </g>
+
+                    <!-- Textes pour Ordinateur -->
+                    <g class="desktop-text">
+                        <!-- Noms des villes -->
+                        <g font-family="Jost, sans-serif" font-weight="500" font-size="22" fill="#666" text-anchor="middle">
+                            <!-- Top cities -->
+                            <text x="100" y="25" font-weight="800">MONTPELLIER</text>
+                            <text x="300" y="25">SALAMANCA</text>
+                            <text x="500" y="25">CÔJA</text>
+                            <text x="700" y="25">COMPORTA</text>
+
+                            <!-- Bottom cities -->
+                            <text x="100" y="385">BARCELONE</text>
+                            <text x="300" y="385">PORTO</text>
+                            <text x="500" y="385">SINTRA</text>
+                            <text x="700" y="385" font-weight="800">ELVAS</text>
+                            <text x="900" y="385">MONTPELLIER</text>
+                        </g>
+
+                        <!-- Numéros des vitesses -->
+                        <g font-family="Jost, sans-serif" font-weight="700" font-size="36" fill="#333" text-anchor="middle" dominant-baseline="central">
+                            <text x="100" y="55">1</text>
+                            <text x="100" y="345">2</text>
+                            <text x="300" y="55">3</text>
+                            <text x="300" y="345">4</text>
+                            <text x="500" y="55">5</text>
+                            <text x="500" y="345">6</text>
+                            <text x="700" y="55">7</text>
+                            <text x="700" y="345">8</text>
+                            <text x="900" y="345" fill="#F0544F">R</text>
+                        </g>
+                    </g>
+
+                    <!-- Textes pour Mobile (pivotés de -90deg pour compenser la rotation du conteneur) -->
+                    <g class="mobile-text">
+                        <g font-family="Jost, sans-serif" text-anchor="middle" dominant-baseline="central">
+                            <!-- 1 -->
+                            <text x="100" y="55" font-weight="700" font-size="36" fill="#333" transform="rotate(-90, 100, 55)">1</text>
+                            <text x="145" y="85" font-weight="800" font-size="15" fill="#666" transform="rotate(-90, 145, 85)">MONTPELLIER</text>
+                            <!-- 2 -->
+                            <text x="100" y="345" font-weight="700" font-size="36" fill="#333" transform="rotate(-90, 100, 345)">2</text>
+                            <text x="145" y="315" font-weight="500" font-size="15" fill="#666" transform="rotate(-90, 145, 315)">BARCELONE</text>
+                            <!-- 3 -->
+                            <text x="300" y="55" font-weight="700" font-size="36" fill="#333" transform="rotate(-90, 300, 55)">3</text>
+                            <text x="345" y="85" font-weight="500" font-size="15" fill="#666" transform="rotate(-90, 345, 85)">SALAMANCA</text>
+                            <!-- 4 -->
+                            <text x="300" y="345" font-weight="700" font-size="36" fill="#333" transform="rotate(-90, 300, 345)">4</text>
+                            <text x="345" y="315" font-weight="500" font-size="15" fill="#666" transform="rotate(-90, 345, 315)">PORTO</text>
+                            <!-- 5 -->
+                            <text x="500" y="55" font-weight="700" font-size="36" fill="#333" transform="rotate(-90, 500, 55)">5</text>
+                            <text x="545" y="85" font-weight="500" font-size="15" fill="#666" transform="rotate(-90, 545, 85)">CÔJA</text>
+                            <!-- 6 -->
+                            <text x="500" y="345" font-weight="700" font-size="36" fill="#333" transform="rotate(-90, 500, 345)">6</text>
+                            <text x="545" y="315" font-weight="500" font-size="15" fill="#666" transform="rotate(-90, 545, 315)">SINTRA</text>
+                            <!-- 7 -->
+                            <text x="700" y="55" font-weight="700" font-size="36" fill="#333" transform="rotate(-90, 700, 55)">7</text>
+                            <text x="745" y="85" font-weight="500" font-size="15" fill="#666" transform="rotate(-90, 745, 85)">COMPORTA</text>
+                            <!-- 8 -->
+                            <text x="700" y="345" font-weight="700" font-size="36" fill="#333" transform="rotate(-90, 700, 345)">8</text>
+                            <text x="745" y="315" font-weight="800" font-size="15" fill="#666" transform="rotate(-90, 745, 315)">ELVAS</text>
+                            <!-- R -->
+                            <text x="900" y="345" font-weight="700" font-size="36" fill="#F0544F" transform="rotate(-90, 900, 345)">R</text>
+                            <text x="945" y="315" font-weight="500" font-size="15" fill="#666" transform="rotate(-90, 945, 315)">MONTPELLIER</text>
+                        </g>
+                    </g>
+                </svg>
+            </div>
         </section>
 
         <section id="logements" class="section">
