@@ -89,7 +89,7 @@ try {
     console.log('[ROADTREEP] Canvas initialisé ✅');
 
     // État
-    let active    = false;
+    let active    = true;
     let dragging  = false;
     let tx = 0, ty = 0;
     let ox = 0, oy = 0;          // origin de drag
@@ -103,40 +103,46 @@ try {
     };
 
     const getRingPos = (n) => {
-        let ring = 1, prev = 0, cap = 6;
-        while (n > prev + cap) { prev += cap; ring++; cap = ring * 6; }
-        const idx   = n - prev - 1;
-        const angle = (idx / cap) * Math.PI * 2;
-        const r     = ring * RING_GAP;
-        return { x: Math.cos(angle) * r, y: Math.sin(angle) * r };
+        let ring = 1, prev = 0, cap = 8;
+        while (n > prev + cap) { 
+            prev += cap; 
+            ring++; 
+            cap = ring * 8; 
+        }
+        const idx = n - prev - 1;
+        
+        const sideLen = ring * 2;
+        const side = Math.floor(idx / sideLen);
+        const pos = idx % sideLen;
+        
+        const D = ring * RING_GAP;
+        const step = RING_GAP;
+        
+        let x = 0, y = 0;
+        
+        if (side === 0) {
+            x = -D + pos * step;
+            y = -D;
+        } else if (side === 1) {
+            x = D;
+            y = -D + pos * step;
+        } else if (side === 2) {
+            x = D - pos * step;
+            y = D;
+        } else if (side === 3) {
+            x = -D;
+            y = D - pos * step;
+        }
+        
+        // Ajout d'une toute petite variation aléatoire (optionnelle) pour faire naturel, 
+        // décommentez si besoin :
+        // x += (Math.random() - 0.5) * 20;
+        // y += (Math.random() - 0.5) * 20;
+
+        return { x, y };
     };
 
-    // ── Activer l'exploration ──────────────────────────────
-    wrapper.addEventListener('click', (e) => {
-        if (active) return;
-        // Exclure le bouton "+" et le bouton quitter
-        if (e.target.closest('.add-photo-btn'))  return;
-        if (e.target.closest('.exit-album-btn')) return;
 
-        active = true;
-        wrapper.classList.remove('inactive');
-        if (section) section.classList.add('fullscreen-active');
-        console.log('[ROADTREEP] Mode exploration activé ✅');
-    });
-
-    // ── Quitter l'exploration ──────────────────────────────
-    if (exitBtn) {
-        exitBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            active   = false;
-            dragging = false;
-            wrapper.classList.add('inactive');
-            if (section) section.classList.remove('fullscreen-active');
-            tx = 0; ty = 0;
-            setTransform();
-            console.log('[ROADTREEP] Mode exploration désactivé');
-        });
-    }
 
     // ── Drag du canvas ─────────────────────────────────────
     wrapper.addEventListener('mousedown', (e) => {
