@@ -394,3 +394,59 @@ try {
     loadPhotos();
 
 })(); // fin initCanvas
+
+// ─── 4. CARTE LEAFLET (PARCOURS) ───────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    const mapContainer = document.getElementById('map-container');
+    if (!mapContainer || typeof L === 'undefined') return;
+
+    // Initialisation — interaction désactivée pour un effet "carte affiche"
+    const map = L.map('map-container', {
+        zoomControl: false,
+        dragging: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        touchZoom: false,
+        boxZoom: false,
+        keyboard: false
+    }).setView([40.0, -4.0], 6); // Centré sur Péninsule Ibérique
+
+    // Ajout d'un VRAI fond de carte élégant et très clair
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20
+    }).addTo(map);
+
+    const rootStyles = getComputedStyle(document.documentElement);
+    const primaryColor = rootStyles.getPropertyValue('--primary-color').trim() || '#A27BFF';
+    const heroBg = rootStyles.getPropertyValue('--hero-bg').trim() || '#F0544F';
+
+    fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
+        .then(response => response.json())
+        .then(data => {
+            const allowed = ['FRA', 'ESP', 'PRT', 'AND'];
+            const filteredData = {
+                type: 'FeatureCollection',
+                features: data.features.filter(feature => allowed.includes(feature.id))
+            };
+
+            L.geoJSON(filteredData, {
+                style: {
+                    color: heroBg,          // Contour Corail
+                    weight: 2.5,
+                    fillColor: primaryColor, // Remplissage Lilas
+                    fillOpacity: 0.12,
+                    opacity: 1
+                }
+            }).addTo(map);
+
+            // Vue englobant toute la France jusqu'au Portugal
+            const routeBounds = L.latLngBounds(
+                L.latLng(36.0, -9.5), // SW : sud Portugal
+                L.latLng(51.5,  8.5)  // NE : nord/est de la France
+            );
+            map.fitBounds(routeBounds, { padding: [20, 20] });
+        })
+        .catch(err => console.error('Erreur chargement GeoJSON:', err));
+});

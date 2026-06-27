@@ -1,10 +1,16 @@
 :root {
-    --bg-color: #FAF6F0; /* Sable / Coquille d'œuf - ultra lumineux et frais */
-    --hero-bg: #F0544F; /* Rouge vibrant / Corail */
-    --text-color: #2D3748; /* Gris sombre élégant pour un fond clair */
-    --primary-color: #A27BFF; /* Lavande / Lilas Éclatant - Unique, lumineux et très frais */
-    --nav-bg: rgba(240, 84, 79, 0.95); /* Rouge vibrant avec légère transparence */
-    --border-color: rgba(162, 123, 255, 0.3); /* Bordures Lilas subtiles */
+    --bg-color: #FAF6F0;
+    /* Sable / Coquille d'œuf - ultra lumineux et frais */
+    --hero-bg: #F0544F;
+    /* Rouge vibrant / Corail */
+    --text-color: #2D3748;
+    /* Gris sombre élégant pour un fond clair */
+    --primary-color: #A27BFF;
+    /* Lavande / Lilas Éclatant - Unique, lumineux et très frais */
+    --nav-bg: rgba(240, 84, 79, 0.95);
+    /* Rouge vibrant avec légère transparence */
+    --border-color: rgba(162, 123, 255, 0.3);
+    /* Bordures Lilas subtiles */
 }
 
 * {
@@ -30,7 +36,8 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 80px; /* Toujours réduite par défaut */
+    width: 80px;
+    /* Toujours réduite par défaut */
     height: 100vh;
     z-index: 1000;
     background: var(--nav-bg);
@@ -42,16 +49,18 @@ body {
 }
 
 .navbar:hover {
-    width: 220px; /* S'ouvre uniquement au hover */
+    width: 220px;
+    /* S'ouvre uniquement au hover */
 }
 
 .navbar-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 2.5rem 1.5rem;
+    padding: 2.5rem 1rem; /* Modifié pour laisser de la place aux cercles */
     height: 100%;
-    width: 220px; /* Force width so content doesn't squeeze during animation */
+    width: 220px;
+    /* Force width so content doesn't squeeze during animation */
 }
 
 .logo {
@@ -75,6 +84,19 @@ body {
     white-space: nowrap;
 }
 
+.logo-icon {
+    transition: opacity 0.2s ease, width 0.2s ease, margin 0.2s ease;
+    flex-shrink: 0;
+}
+
+.navbar:hover .logo-icon {
+    opacity: 0;
+    width: 0;
+    margin: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
 .navbar:not(:hover) .logo span {
     opacity: 0;
     pointer-events: none;
@@ -91,20 +113,37 @@ body {
 .nav-link {
     display: flex;
     align-items: center;
-    gap: 1.2rem;
+    gap: 0; /* Pas de gap par défaut pour que l'icône reste centrée */
     text-decoration: none;
     color: rgba(255, 255, 255, 0.8);
     font-weight: 600;
     font-size: 0.95rem;
     letter-spacing: 1px;
-    transition: all 0.3s ease;
-    padding: 0.75rem 0.5rem;
-    border-radius: 8px;
-    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
+
+    /* État réduit : Cercle parfait */
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
 }
 
-.nav-link:hover, .nav-link.active {
+.navbar:hover .nav-link {
+    /* État étendu : Rectangle semi-arrondi */
+    gap: 1.2rem; /* Le gap réapparaît quand la sidebar s'ouvre */
+    width: 100%;
+    height: auto;
+    min-width: unset;
+    padding: 0.75rem 1.2rem;
+    justify-content: flex-start;
+    border-radius: 8px;
+}
+
+.nav-link:hover,
+.nav-link.active {
     color: #ffffff;
     background: rgba(255, 255, 255, 0.2);
 }
@@ -114,15 +153,20 @@ body {
 }
 
 .nav-text {
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease, width 0s, max-width 0.3s ease;
+    opacity: 1;
+    max-width: 200px;
+    overflow: hidden;
 }
 
 .navbar:not(:hover) .nav-text {
     opacity: 0;
+    max-width: 0;
     pointer-events: none;
 }
 
-main, .footer {
+main,
+.footer {
     padding-left: 80px;
     transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -166,19 +210,22 @@ main, .footer {
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.hero-content > * {
+.hero-content>* {
     pointer-events: auto;
 }
 
 .hero-title {
     font-family: 'Jost', sans-serif;
-    font-size: clamp(3.5rem, 8vw, 7rem); /* Plus gros */
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    /* Plus gros */
     font-weight: 800;
-    line-height: 0.95; /* Titre plus tassé et percutant */
+    line-height: 0.95;
+    /* Titre plus tassé et percutant */
     margin-bottom: 1.5rem;
     color: var(--primary-color);
     text-transform: uppercase;
-    letter-spacing: -1px; /* Moderne */
+    letter-spacing: -1px;
+    /* Moderne */
 }
 
 .hero-section.fullscreen-active .hero-content {
@@ -233,39 +280,46 @@ main, .footer {
     background: var(--bg-color);
     max-width: none;
     margin: 0;
-    padding: 100px 0 4rem 0; /* Prend tout l'espace */
-    align-items: center;
-    position: relative; /* Pour la vague SVG absolue */
+    padding: 100px 0 4rem 0;
+    /* Prend tout l'espace */
+    position: relative;
+    /* Pour la vague SVG absolue */
 }
 
 /* SHAPE DIVIDER (Vague transition Hero -> Pokedex) */
 .custom-shape-divider-top {
     position: absolute;
-    top: -1px; /* Évite la fine ligne de démarcation */
+    top: -1px;
+    /* Évite la fine ligne de démarcation */
     left: 0;
     width: 100%;
     overflow: hidden;
     line-height: 0;
     z-index: 0;
 }
+
 .custom-shape-divider-top svg {
     position: relative;
     display: block;
     width: calc(100% + 1.3px);
     height: 70px;
 }
+
 .custom-shape-divider-top .shape-fill {
-    fill: #0d1117; /* Couleur de la section Hero qui "coule" sur le vert */
+    fill: #0d1117;
+    /* Couleur de la section Hero qui "coule" sur le vert */
 }
 
 #equipage h2 {
     font-family: 'Jost', sans-serif;
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 800;
-    color: var(--hero-bg); /* Corail sur fond sable = magnifique */
+    color: var(--hero-bg);
+    /* Corail sur fond sable = magnifique */
     letter-spacing: 8px;
     text-transform: uppercase;
     margin-bottom: 3rem;
+    align-self: center; /* Recentré ! */
     z-index: 10;
 }
 
@@ -302,18 +356,88 @@ main, .footer {
     border-color: rgba(255, 255, 255, 0.3);
 }
 
+/* SECTION PARCOURS */
+#parcours {
+    max-width: none;
+    margin: 0;
+    padding: 2rem 0 0 0; /* Réduit pour rapprocher du Pokédex (était 6rem) */
+    width: calc(100% + 80px); /* Vraie pleine largeur (100% du main + 80px du padding gauche) */
+    margin-left: -80px; /* Colle tout à gauche de l'écran (derrière la sidebar) */
+    align-items: center; /* Centre le titre */
+    overflow: hidden; /* Empêche de dépasser à droite */
+    min-height: auto; /* Retire la hauteur minimale forcée pour supprimer l'espace vide */
+    justify-content: flex-start; /* Aligne le contenu vers le haut */
+}
+
+/* Date titre — haute spécificité pour ne pas être écrasée par .section h2 */
+.section h2.date-title {
+    font-family: 'Jost', sans-serif;
+    font-size: 10vw; /* Grand mais pas excessif */
+    font-weight: 800;
+    color: var(--hero-bg); /* Corail */
+    letter-spacing: -4px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    white-space: nowrap;
+    padding: 0;
+    line-height: 0.9;
+    display: block;
+}
+
+/* Pas de barre décorative sur ce titre */
+.section h2.date-title::after {
+    display: none;
+}
+
+/* Sous-titre route — plus petit que la date */
+.route-subtitle {
+    font-family: 'Jost', sans-serif;
+    font-size: clamp(1rem, 3vw, 2rem);
+    font-weight: 600;
+    color: var(--text-color);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-top: 1.5rem;   /* Espace par rapport à la date */
+    margin-bottom: 3rem;
+    text-align: center;
+    white-space: nowrap;
+    padding: 0 2rem;
+}
+
+/* MAP CONTAINER — vraie pleine largeur d'écran */
+#map-container {
+    width: 100%;        /* Prend 100% de #parcours qui est déjà full-width */
+    margin-left: 0;     /* Plus besoin de décaler, #parcours le fait déjà */
+    height: 90vh;       /* Quasiment toute la hauteur de l'écran */
+    border-radius: 0;
+    background: #FAF6F0; /* Fallback couleur sable */
+    z-index: 1;
+}
+
+/* Cache les contrôles Leaflet pour un style épuré */
+.leaflet-control-container .leaflet-top,
+.leaflet-control-container .leaflet-bottom {
+    display: none;
+}
+
 /* POKEDEX GALLERY */
 .pokedex-gallery {
-    width: calc(100vw - 80px); /* Prend toute la largeur moins la sidebar */
-    margin-left: calc(50% - (100vw - 80px) / 2); /* Centre en sortant du conteneur .section */
-    display: flex; /* Layout Accordéon */
-    height: 70vh; /* Grande hauteur fixe pour l'effet de panneau */
+    width: calc(100vw - 80px);
+    /* Prend toute la largeur moins la sidebar */
+    margin-left: calc(50% - (100vw - 80px) / 2);
+    /* Centre en sortant du conteneur .section */
+    display: flex;
+    /* Layout Accordéon */
+    height: 70vh;
+    /* Grande hauteur fixe pour l'effet de panneau */
 }
 
 .pokedex-item {
     position: relative;
     overflow: hidden;
-    flex: 1; /* Chaque image prend une petite tranche par défaut */
+    flex: 1;
+    /* Chaque image prend une petite tranche par défaut */
     transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     cursor: pointer;
 }
@@ -322,24 +446,28 @@ main, .footer {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center; /* Toujours centré sur le visage même quand coupé */
-    filter: grayscale(60%) contrast(120%) brightness(80%) sepia(20%); /* Filtre Épique/Cinématique */
+    object-position: center;
+    /* Toujours centré sur le visage même quand coupé */
+    filter: grayscale(60%) contrast(120%) brightness(80%) sepia(20%);
+    /* Filtre Épique/Cinématique */
     transition: filter 0.6s ease;
 }
 
 .pokedex-item:hover {
-    flex: 4; /* L'image s'ouvre en grand au survol ! */
+    flex: 4;
+    /* L'image s'ouvre en grand au survol ! */
 }
 
 .pokedex-item:hover img {
-    filter: grayscale(0%) contrast(110%) brightness(100%) sepia(0%); /* La couleur revient au survol */
+    filter: grayscale(0%) contrast(110%) brightness(100%) sepia(0%);
+    /* La couleur revient au survol */
 }
 
 .pokedex-item::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 40%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 40%);
     pointer-events: none;
 }
 
@@ -353,9 +481,10 @@ main, .footer {
     line-height: 1.1;
     font-weight: 800;
     text-transform: uppercase;
-    text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
     z-index: 10;
-    white-space: nowrap; /* Empêche le texte de se casser sur deux lignes quand c'est très étroit */
+    white-space: nowrap;
+    /* Empêche le texte de se casser sur deux lignes quand c'est très étroit */
 }
 
 .pokedex-lastname {
@@ -367,8 +496,15 @@ main, .footer {
 
 /* ANIMATIONS */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* RESPONSIVE */
@@ -376,16 +512,40 @@ main, .footer {
     .pokedex-gallery {
         width: 100vw;
         margin-left: calc(50% - 50vw);
-        flex-direction: column; /* S'empile sur mobile */
-        height: auto;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Hide scrollbar Firefox */
+        height: 60vh;
+        gap: 1rem;
+        padding: 0 1rem;
     }
-    
+
+    .pokedex-gallery::-webkit-scrollbar {
+        display: none; /* Hide scrollbar Chrome/Safari */
+    }
+
     .pokedex-item {
-        height: 20vh; /* Petite tranche horizontale sur mobile */
+        flex: 0 0 80vw;
+        height: 100%;
+        scroll-snap-align: center;
+        border-radius: 15px;
+    }
+
+    .pokedex-item img, .pokedex-item::after {
+        border-radius: 15px;
     }
 
     .pokedex-item:hover {
-        height: 50vh; /* S'ouvre en hauteur sur mobile ! */
+        flex: 0 0 80vw;
+        height: 100%;
+    }
+
+    #parcours {
+        margin-left: 0; /* Reset margin on mobile */
+        width: 100%; /* Reset width on mobile */
     }
 
     /* Sur mobile, la sidebar devient une Bottom Bar (façon app) */
@@ -415,8 +575,10 @@ main, .footer {
         width: auto;
     }
 
-    .logo span, .nav-text {
-        display: none !important; /* On cache tous les textes sur mobile */
+    .logo span,
+    .nav-text {
+        display: none !important;
+        /* On cache tous les textes sur mobile */
     }
 
     .nav-menu {
@@ -431,9 +593,11 @@ main, .footer {
         padding: 10px;
     }
 
-    main, .footer {
+    main,
+    .footer {
         padding-left: 0 !important;
-        padding-bottom: 70px; /* Espace pour la bottom bar */
+        padding-bottom: 70px;
+        /* Espace pour la bottom bar */
     }
 
     .hamburger {
@@ -441,25 +605,7 @@ main, .footer {
     }
 }
 
-/* INFINITE CANVAS ALBUM */
-.album-section {
-    max-width: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 10;
-    background-color: #0d1117;
-}
-
-
-
+/* HERO FULLSCREEN (mode album) */
 .hero-section.fullscreen-active {
     position: fixed;
     top: 0;
@@ -470,35 +616,6 @@ main, .footer {
     padding: 0;
     z-index: 99999;
     background-color: #0d1117;
-}
-
-.album-title {
-    position: absolute;
-    top: 40px;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    pointer-events: none;
-    text-align: center;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 800;
-    color: #ffffff;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
-    transition: all 0.5s ease;
-}
-
-.album-section.fullscreen-active .album-title {
-    /* Reste visible, on peut la rendre légèrement plus petite ou juste la laisser telle quelle */
-    opacity: 1;
-}
-
-.album-title::after {
-    content: '';
-    display: block;
-    margin: 10px auto 0;
-    width: 60px;
-    background: var(--primary-color);
-    border-radius: 2px;
 }
 
 .album-wrapper {
@@ -649,10 +766,13 @@ main, .footer {
 .exit-album-btn {
     position: absolute;
     bottom: 40px;
-    right: 120px; /* A gauche du bouton Ajouter (qui est à right:40px) */
-    height: 60px; /* Même hauteur que le bouton Ajouter */
+    right: 120px;
+    /* A gauche du bouton Ajouter (qui est à right:40px) */
+    height: 60px;
+    /* Même hauteur que le bouton Ajouter */
     padding: 0 25px;
-    display: none; /* Deviendra flex en fullscreen */
+    display: none;
+    /* Deviendra flex en fullscreen */
     align-items: center;
     background: rgba(255, 255, 255, 0.1);
     color: white;
@@ -797,6 +917,7 @@ main, .footer {
         grid-template-columns: 1fr;
         gap: 2.5rem;
     }
+
     .footer-bottom {
         flex-direction: column;
         gap: 1rem;
