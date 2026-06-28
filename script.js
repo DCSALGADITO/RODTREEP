@@ -862,3 +862,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // Init
     loadActivities();
 });
+
+// ─── 8. ANIMATION COMPTEURS (STATS) ─────────────────────────
+(function initCountUp() {
+    const counters = document.querySelectorAll('.count-up');
+    if (!counters.length) return;
+
+    const animateCount = (el) => {
+        const target = parseInt(el.getAttribute('data-target'), 10);
+        const duration = 2000; // 2 secondes
+        const startTime = performance.now();
+
+        const update = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Easing function (ease-out) : ralentit vers la fin
+            const easeOut = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+            
+            el.innerText = Math.floor(easeOut * target);
+
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            } else {
+                el.innerText = target;
+            }
+        };
+
+        requestAnimationFrame(update);
+    };
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCount(entry.target);
+                obs.unobserve(entry.target); // Jouer l'animation une seule fois
+            }
+        });
+    }, { threshold: 0.5 }); // Se déclenche quand 50% de l'élément est visible
+
+    counters.forEach(counter => observer.observe(counter));
+})();
