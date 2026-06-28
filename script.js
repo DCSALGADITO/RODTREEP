@@ -1,13 +1,13 @@
 // =============================================================
-// ROADTREEP — script.js  (version senior, architecture propre)
+// RODTREEP — script.js  (version senior, architecture propre)
 // =============================================================
 
 // ─── 1. NAVBAR ───────────────────────────────────────────────
 (function initNavbar() {
     const hamburger = document.querySelector('.hamburger');
-    const navMenu   = document.querySelector('.nav-menu');
-    const navLinks  = document.querySelectorAll('.nav-link');
-    const navbar    = document.querySelector('.navbar');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const navbar = document.querySelector('.navbar');
 
     if (!hamburger || !navMenu) return;
 
@@ -55,41 +55,41 @@ try {
     // supabase.min.js expose window.supabase (UMD build)
     if (window.supabase && typeof window.supabase.createClient === 'function') {
         db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        console.log('[ROADTREEP] Supabase initialisé ✅');
+        console.log('[RODTREEP] Supabase initialisé ✅');
     } else {
-        console.warn('[ROADTREEP] Supabase SDK non disponible – mode local activé');
+        console.warn('[RODTREEP] Supabase SDK non disponible – mode local activé');
     }
 } catch (err) {
-    console.error('[ROADTREEP] Erreur init Supabase:', err);
+    console.error('[RODTREEP] Erreur init Supabase:', err);
 }
 
 
 // ─── 3. CANVAS ───────────────────────────────────────────────
 (function initCanvas() {
     // Refs DOM
-    const section      = document.getElementById('hero');
-    const wrapper      = document.getElementById('album-wrapper');
-    const canvas       = document.getElementById('infinite-canvas');
-    const uploadInput  = document.getElementById('photo-upload');
-    const exitBtn      = document.getElementById('exit-album-btn');
+    const section = document.getElementById('hero');
+    const wrapper = document.getElementById('album-wrapper');
+    const canvas = document.getElementById('infinite-canvas');
+    const uploadInput = document.getElementById('photo-upload');
+    const exitBtn = document.getElementById('exit-album-btn');
 
     if (!wrapper || !canvas) {
-        console.error('[ROADTREEP] Éléments du canvas introuvables !');
+        console.error('[RODTREEP] Éléments du canvas introuvables !');
         return;
     }
 
-    console.log('[ROADTREEP] Canvas initialisé ✅');
+    console.log('[RODTREEP] Canvas initialisé ✅');
 
     // État
     // État
-    let active    = false;
-    let dragging  = false;
+    let active = false;
+    let dragging = false;
     let tx = 0, ty = 0;
     let ox = 0, oy = 0;          // origin de drag
-    let photoCount    = 0;
-    let zTop          = 10;
-    const GAP_X       = 330; // Espace horizontal entre les photos (240px largeur + 90px d'espace)
-    const GAP_Y       = 250; // Espace vertical entre les photos (160px hauteur + 90px d'espace)
+    let photoCount = 0;
+    let zTop = 10;
+    const GAP_X = 330; // Espace horizontal entre les photos (240px largeur + 90px d'espace)
+    const GAP_Y = 250; // Espace vertical entre les photos (160px hauteur + 90px d'espace)
 
     // Activation / Désactivation
     const activateAlbum = () => {
@@ -148,10 +148,10 @@ try {
         // Segment 3 - Bas (droite→gauche): (r-1,r) → (-r,r)  = 2r cases
         // Segment 4 - Gauche (bas→haut)  : (-r,r-1) → (-r,-r) = 2r cases
         // Segment 5 - Top fin            : (-(r-1),-r) → (-1,-r) = r-1 cases
-        const cTOP    = r + 1;
-        const cRIGHT  = cTOP + 2 * r;
+        const cTOP = r + 1;
+        const cRIGHT = cTOP + 2 * r;
         const cBOTTOM = cRIGHT + 2 * r;
-        const cLEFT   = cBOTTOM + 2 * r;
+        const cLEFT = cBOTTOM + 2 * r;
 
         let gx, gy;
 
@@ -224,7 +224,7 @@ try {
     window.addEventListener('keydown', (e) => {
         if (!active) return;
         const step = 50; // Vitesse de déplacement au clavier
-        switch(e.key) {
+        switch (e.key) {
             case 'ArrowUp':
                 ty += step;
                 e.preventDefault();
@@ -263,7 +263,7 @@ try {
 
     // ── Upload vers Supabase ───────────────────────────────
     async function uploadToSupabase(file) {
-        const ext  = file.name.split('.').pop().toLowerCase();
+        const ext = file.name.split('.').pop().toLowerCase();
         const name = `${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
 
         try {
@@ -284,10 +284,10 @@ try {
 
             const isVideo = file.type.startsWith('video/');
             addPhoto(publicUrl, dbData.id, name, isVideo);
-            console.log('[ROADTREEP] Média sauvegardé sur Supabase ✅', name);
+            console.log('[RODTREEP] Média sauvegardé sur Supabase ✅', name);
 
         } catch (err) {
-            console.error('[ROADTREEP] Erreur Supabase, fallback local:', err);
+            console.error('[RODTREEP] Erreur Supabase, fallback local:', err);
             showLocalPhoto(file); // fallback : affichage local quand même
         }
     }
@@ -303,7 +303,7 @@ try {
     // ── Ajout d'une photo sur le canvas ───────────────────
     function addPhoto(src, dbId, storagePath, isVideo = false) {
         if (!canvas) return;
-        
+
         // Si isVideo n'est pas fourni localement, on tente de deviner d'après le chemin
         if (!isVideo && storagePath) {
             isVideo = !!storagePath.match(/\.(mp4|webm|ogg|mov)$/i);
@@ -318,9 +318,9 @@ try {
         }
 
         const div = document.createElement('div');
-        div.className    = 'photo-item';
-        div.style.left   = pos.x + 'px';
-        div.style.top    = pos.y + 'px';
+        div.className = 'photo-item';
+        div.style.left = pos.x + 'px';
+        div.style.top = pos.y + 'px';
         div.style.transform = 'translate(-50%,-50%)';
         div.style.zIndex = zTop++;
         if (dbId) div.dataset.id = dbId;
@@ -337,7 +337,7 @@ try {
             div.appendChild(vid);
         } else {
             const img = document.createElement('img');
-            img.src       = src;
+            img.src = src;
             img.draggable = false;
             div.appendChild(img);
         }
@@ -349,22 +349,22 @@ try {
         // Télécharger
         const dl = document.createElement('a');
         dl.className = 'action-btn download-btn';
-        dl.href      = src;
-        dl.download  = 'roadtreep_photo.jpg';
-        dl.title     = 'Télécharger';
+        dl.href = src;
+        dl.download = 'rodtreep_photo.jpg';
+        dl.title = 'Télécharger';
         dl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
         dl.addEventListener('mousedown', ev => ev.stopPropagation());
 
         // Supprimer
         const del = document.createElement('button');
         del.className = 'action-btn delete-btn';
-        del.title     = 'Supprimer';
+        del.title = 'Supprimer';
         del.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>`;
         del.addEventListener('mousedown', async (ev) => {
             ev.stopPropagation();
             // Récupérer la position de la photo avant de la supprimer
             const deletedLeft = div.style.left;
-            const deletedTop  = div.style.top;
+            const deletedTop = div.style.top;
             const deletedIndex = div.dataset.photoIndex;
             div.remove();
             // Recréer un placeholder gris à la place de la photo supprimée
@@ -377,8 +377,8 @@ try {
                 ph.dataset.index = deletedIndex;
                 canvas.appendChild(ph);
             }
-            if (db && dbId)        { try { await db.from('photos').delete().eq('id', dbId); } catch(e){} }
-            if (db && storagePath) { try { await db.storage.from(BUCKET).remove([storagePath]); } catch(e){} }
+            if (db && dbId) { try { await db.from('photos').delete().eq('id', dbId); } catch (e) { } }
+            if (db && storagePath) { try { await db.storage.from(BUCKET).remove([storagePath]); } catch (e) { } }
         });
 
         actions.appendChild(dl);
@@ -388,7 +388,7 @@ try {
         div.dataset.photoIndex = photoCount;
         canvas.appendChild(div);
 
-        console.log('[ROADTREEP] Photo ajoutée au canvas ✅ pos:', pos);
+        console.log('[RODTREEP] Photo ajoutée au canvas ✅ pos:', pos);
     }
 
     // ── Générer les placeholders gris ─────────────────────
@@ -410,10 +410,10 @@ try {
 
     // ── Charger les photos depuis Supabase au démarrage ───
     async function loadPhotos() {
-        if (!db) { 
-            console.log('[ROADTREEP] Mode local – pas de chargement Supabase'); 
+        if (!db) {
+            console.log('[RODTREEP] Mode local – pas de chargement Supabase');
             initPlaceholders();
-            return; 
+            return;
         }
         try {
             const { data, error } = await db
@@ -422,9 +422,9 @@ try {
                 .order('created_at', { ascending: true });
             if (error) throw error;
             (data || []).forEach(p => addPhoto(p.public_url, p.id, p.storage_path));
-            console.log(`[ROADTREEP] ${(data||[]).length} photo(s) chargée(s) depuis Supabase ✅`);
+            console.log(`[RODTREEP] ${(data || []).length} photo(s) chargée(s) depuis Supabase ✅`);
         } catch (err) {
-            console.error('[ROADTREEP] Impossible de charger les photos:', err);
+            console.error('[RODTREEP] Impossible de charger les photos:', err);
         }
         initPlaceholders();
     }
@@ -482,7 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Vue englobant toute la France jusqu'au Portugal
             const routeBounds = L.latLngBounds(
                 L.latLng(36.0, -9.5), // SW : sud Portugal
-                L.latLng(51.5,  8.5)  // NE : nord/est de la France
+                L.latLng(51.5, 8.5)  // NE : nord/est de la France
             );
             map.fitBounds(routeBounds, { padding: [20, 20] });
         })
@@ -508,7 +508,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnPrev = document.getElementById('logement-prev');
     const btnNext = document.getElementById('logement-next');
     const dotsContainer = document.getElementById('logements-dots');
-    
+
     if (!track || !btnPrev || !btnNext || !dotsContainer) return;
 
     const cards = Array.from(track.children);
@@ -529,16 +529,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateCarousel() {
         // Move track
         track.style.transform = `translateX(-${currentIndex * 100}%)`;
-        
+
         // Update dots
         dots.forEach((dot, index) => {
             dot.classList.toggle('active', index === currentIndex);
         });
-        
+
         // Update buttons state
         btnPrev.style.opacity = currentIndex === 0 ? '0.5' : '1';
         btnPrev.style.cursor = currentIndex === 0 ? 'default' : 'pointer';
-        
+
         btnNext.style.opacity = currentIndex === totalCards - 1 ? '0.5' : '1';
         btnNext.style.cursor = currentIndex === totalCards - 1 ? 'default' : 'pointer';
     }
@@ -570,11 +570,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function touchStart(event) {
         startX = event.touches[0].clientX;
         isDragging = true;
-        
+
         // Calculate px value of -currentIndex * 100%
         const cardWidth = track.clientWidth;
         prevTranslate = -currentIndex * cardWidth;
-        
+
         track.style.transition = 'none';
     }
 
@@ -589,16 +589,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function touchEnd(event) {
         isDragging = false;
         track.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
-        
+
         const movedBy = currentTranslate - prevTranslate;
-        
+
         // Threshold for swipe
         if (movedBy < -50 && currentIndex < totalCards - 1) {
             currentIndex += 1;
         } else if (movedBy > 50 && currentIndex > 0) {
             currentIndex -= 1;
         }
-        
+
         updateCarousel();
     }
 
@@ -609,4 +609,256 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize
     updateCarousel();
+});
+
+// ─── 6. ACTIVITÉS (NUAGE DE MOTS) ──────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('activity-modal');
+    const openBtn = document.getElementById('open-activity-modal-btn');
+    const closeBtn = document.getElementById('close-activity-modal-btn');
+    const form = document.getElementById('add-activity-form');
+    const wordcloudContainer = document.getElementById('wordcloud-container');
+
+    if (!modal || !openBtn || !closeBtn || !form || !wordcloudContainer) return;
+
+    // Définition des couleurs correspondant aux variables CSS
+    const cityColors = {
+        barcelone: 'var(--city-barcelone)',
+        salamanque: 'var(--city-salamanque)',
+        porto: 'var(--city-porto)',
+        coja: 'var(--city-coja)',
+        colares: 'var(--city-colares)',
+        comporta: 'var(--city-comporta)'
+    };
+
+    // État local (Fallback)
+    let activities = JSON.parse(localStorage.getItem('roadtreep_activities')) || [];
+    let selectedActivityIndex = -1; // Pour gérer la sélection/suppression
+
+    // Sauvegarder dans LocalStorage (Fallback)
+    function saveActivitiesLocal() {
+        localStorage.setItem('roadtreep_activities', JSON.stringify(activities));
+    }
+
+    // Charger les activités depuis Supabase
+    async function loadActivities() {
+        if (!db) {
+            console.log('[RODTREEP] Mode local – pas de chargement Supabase pour les activités');
+            renderWordCloud();
+            return;
+        }
+        try {
+            const { data, error } = await db
+                .from('activities')
+                .select('*')
+                .order('created_at', { ascending: true });
+            
+            if (error) throw error;
+            
+            if (data && data.length > 0) {
+                // Remplacer l'état local par les données du serveur
+                activities = data;
+                saveActivitiesLocal(); // Mettre à jour le cache local
+            }
+            console.log(`[RODTREEP] ${(data || []).length} activité(s) chargée(s) depuis Supabase ✅`);
+        } catch (err) {
+            console.error('[RODTREEP] Impossible de charger les activités (fallback local):', err);
+        }
+        renderWordCloud();
+    }
+
+    // Fonction pour calculer la taille selon les votes
+    function getWordStyles(votes) {
+        const baseSize = 1.2;
+        const multiplier = 0.3; // +0.3rem par vote
+        const fontSize = baseSize + (votes * multiplier);
+        
+        // Marge aléatoire pour disperser un peu plus
+        const margin = Math.random() * 20; // px
+        
+        return {
+            fontSize: `${Math.min(fontSize, 4.5)}rem`, // Capacité max à 4.5rem
+            margin: `${margin}px`
+        };
+    }
+
+    // Afficher le nuage de mots
+    function renderWordCloud() {
+        // Nettoyer uniquement les mots et messages
+        const oldElements = wordcloudContainer.querySelectorAll('.wordcloud-word, .empty-msg');
+        oldElements.forEach(el => el.remove());
+        
+        selectedActivityIndex = -1;
+        wordcloudContainer.classList.remove('has-selection');
+        const controlBar = document.querySelector('.activities-control-bar');
+        if (controlBar) controlBar.classList.remove('has-selection');
+        
+        const actionButtons = document.getElementById('activity-actions');
+        if (actionButtons) actionButtons.classList.remove('active');
+        
+        // Si vide, afficher un message stylisé
+        if (activities.length === 0) {
+            const emptyMsg = document.createElement('div');
+            emptyMsg.className = 'empty-msg';
+            emptyMsg.textContent = "Aucune activité pour le moment. Cliquez sur le + pour commencer !";
+            emptyMsg.style.color = "rgba(0,0,0,0.3)";
+            emptyMsg.style.fontStyle = "italic";
+            wordcloudContainer.appendChild(emptyMsg);
+            return;
+        }
+
+        activities.forEach((act, index) => {
+            const span = document.createElement('span');
+            span.className = 'wordcloud-word';
+            span.textContent = act.name;
+            span.style.color = cityColors[act.city] || 'var(--text-color)';
+            
+            const styles = getWordStyles(act.votes || 0);
+            span.style.fontSize = styles.fontSize;
+            span.style.margin = styles.margin;
+            
+            // Sélection pour actions
+            span.addEventListener('click', (e) => {
+                e.stopPropagation(); // Évite que le clic sur le container désélectionne
+                
+                // Désélectionner tout
+                wordcloudContainer.querySelectorAll('.wordcloud-word').forEach(w => w.classList.remove('selected'));
+                
+                // Sélectionner celui-ci
+                span.classList.add('selected');
+                wordcloudContainer.classList.add('has-selection');
+                if (controlBar) controlBar.classList.add('has-selection');
+                
+                selectedActivityIndex = index;
+                
+                if (actionButtons) actionButtons.classList.add('active');
+            });
+            
+            wordcloudContainer.appendChild(span);
+        });
+    }
+    
+    // Clic sur le container vide -> désélectionner
+    wordcloudContainer.addEventListener('click', () => {
+        wordcloudContainer.querySelectorAll('.wordcloud-word').forEach(w => w.classList.remove('selected'));
+        wordcloudContainer.classList.remove('has-selection');
+        const controlBar = document.querySelector('.activities-control-bar');
+        if (controlBar) controlBar.classList.remove('has-selection');
+        selectedActivityIndex = -1;
+        const actionButtons = document.getElementById('activity-actions');
+        if (actionButtons) actionButtons.classList.remove('active');
+    });
+
+    // Bouton de suppression
+    const deleteBtn = document.getElementById('delete-activity-zone');
+    if (deleteBtn) {
+        deleteBtn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            if (selectedActivityIndex > -1) {
+                const actToDelete = activities[selectedActivityIndex];
+                
+                // UI optimiste
+                activities.splice(selectedActivityIndex, 1);
+                saveActivitiesLocal();
+                renderWordCloud();
+                
+                // Supabase
+                if (db && actToDelete.name && actToDelete.city) {
+                    try {
+                        const { error } = await db.from('activities')
+                            .delete()
+                            .match({ name: actToDelete.name, city: actToDelete.city });
+                        if (error) throw error;
+                        console.log('[RODTREEP] Activité supprimée de Supabase ✅');
+                    } catch (err) {
+                        console.error('[RODTREEP] Erreur lors de la suppression sur Supabase:', err);
+                    }
+                }
+            }
+        });
+    }
+
+    // Bouton de Vote
+    const voteBtn = document.getElementById('vote-activity-btn');
+    if (voteBtn) {
+        voteBtn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            if (selectedActivityIndex > -1) {
+                const actToVote = activities[selectedActivityIndex];
+                
+                // Incrémentation optimiste
+                actToVote.votes = (actToVote.votes || 0) + 1;
+                saveActivitiesLocal();
+                renderWordCloud();
+                
+                // Supabase Update
+                if (db && actToVote.name && actToVote.city) {
+                    try {
+                        const { error } = await db.from('activities')
+                            .update({ votes: actToVote.votes })
+                            .match({ name: actToVote.name, city: actToVote.city });
+                        if (error) throw error;
+                        console.log('[RODTREEP] Vote sauvegardé sur Supabase ✅');
+                    } catch (err) {
+                        console.error('[RODTREEP] Erreur lors du vote sur Supabase:', err);
+                    }
+                }
+            }
+        });
+    }
+
+    // Gestion modale
+    openBtn.addEventListener('click', () => {
+        modal.classList.add('active');
+        document.getElementById('activity-name').focus();
+    });
+
+    closeBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+
+    // Fermer au clic sur le fond
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+    });
+
+    // Ajouter une activité
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const nameInput = document.getElementById('activity-name');
+        const cityInput = document.querySelector('input[name="activity-city"]:checked');
+        
+        if (nameInput.value.trim() !== '' && cityInput) {
+            const newAct = {
+                name: nameInput.value.trim(),
+                city: cityInput.value,
+                votes: 0
+            };
+            
+            // UI optimiste : on ajoute tout de suite
+            activities.push(newAct);
+            saveActivitiesLocal();
+            renderWordCloud();
+            
+            // Envoi Supabase
+            if (db) {
+                try {
+                    const { error } = await db.from('activities').insert([newAct]);
+                    if (error) throw error;
+                    console.log('[RODTREEP] Activité sauvegardée sur Supabase ✅');
+                } catch (err) {
+                    console.error('[RODTREEP] Erreur lors de la sauvegarde sur Supabase:', err);
+                }
+            }
+            
+            // Reset et fermer
+            nameInput.value = '';
+            cityInput.checked = false;
+            modal.classList.remove('active');
+        }
+    });
+
+    // Init
+    loadActivities();
 });

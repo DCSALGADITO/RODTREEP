@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ROADTREEP - Le site de notre aventure inoubliable.">
-    <title>ROADTREEP</title>
+    <meta name="description" content="RODTREEP - Le site de notre aventure inoubliable.">
+    <title>RODTREEP</title>
     <link rel="stylesheet" href="style.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600;700;800&family=Outfit:wght@300;400;600;800&family=Syne:wght@400;600;800&display=swap"
@@ -18,7 +18,7 @@
         <div class="navbar-container">
             <div class="logo">
                 <a href="#hero">
-                    <span style="font-size: 1.5rem; letter-spacing: 2px;">ROADTREEP</span>
+                    <span style="font-size: 1.5rem; letter-spacing: 2px;">RODTREEP</span>
                 </a>
             </div>
 
@@ -632,9 +632,90 @@
         </section>
 
         <section id="activites" class="section">
-            <h2>Activités</h2>
-            <div class="content-placeholder">
-                <p>Tout ce que nous avons prévu de faire en chemin.</p>
+            <h2>ACTIVITÉS</h2>
+            
+            <!-- Conteneur du Nuage de mots -->
+            <div class="wordcloud-container" id="wordcloud-container">
+                <!-- Les mots seront générés ici via JS -->
+            </div>
+
+            <!-- Barre de contrôle (Villes et Bouton Ajout) -->
+            <div class="activities-control-bar">
+                <div class="cities-list">
+                    <span class="city-badge"><span class="city-dot" style="background: var(--city-barcelone)"></span>Barcelone</span>
+                    <span class="city-badge"><span class="city-dot" style="background: var(--city-salamanque)"></span>Salamanque</span>
+                    <span class="city-badge"><span class="city-dot" style="background: var(--city-porto)"></span>Porto</span>
+                    <span class="city-badge"><span class="city-dot" style="background: var(--city-coja)"></span>Côja</span>
+                    <span class="city-badge"><span class="city-dot" style="background: var(--city-colares)"></span>Colares</span>
+                    <span class="city-badge"><span class="city-dot" style="background: var(--city-comporta)"></span>Comporta</span>
+                </div>
+                
+                <!-- Boutons d'action et d'ajout -->
+                <div class="action-buttons-container">
+                    
+                    <div class="activity-actions" id="activity-actions">
+                        <button class="activity-action-btn vote-btn" id="vote-activity-btn" title="Voter pour cette activité">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </button>
+                        <button class="activity-action-btn delete-btn" id="delete-activity-zone" title="Supprimer l'activité">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Bouton Ajout avec effet Gooey -->
+                    <div class="gooey-btn-wrapper">
+                        <svg class="goo-filter" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <defs>
+                                <filter id="goo">
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+                                    <feBlend in="SourceGraphic" in2="goo" />
+                                </filter>
+                            </defs>
+                        </svg>
+                        <button class="gooey-add-btn" id="open-activity-modal-btn">
+                            <div class="gooey-blob"></div>
+                            <div class="gooey-blob"></div>
+                            <div class="gooey-blob"></div>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="gooey-icon">
+                                <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modale d'ajout d'activité (cachée par défaut) -->
+            <div class="activity-modal-overlay" id="activity-modal">
+                <div class="activity-modal-content">
+                    <button class="close-modal-btn" id="close-activity-modal-btn">&times;</button>
+                    <h3>Ajouter une activité</h3>
+                    <form id="add-activity-form">
+                        <div class="form-group">
+                            <label for="activity-name">Activité</label>
+                            <input type="text" id="activity-name" placeholder="Ex: Sagrada Familia" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Ville</label>
+                            <div class="city-select-grid">
+                                <label class="city-option"><input type="radio" name="activity-city" value="barcelone" required>Barcelone</label>
+                                <label class="city-option"><input type="radio" name="activity-city" value="salamanque">Salamanque</label>
+                                <label class="city-option"><input type="radio" name="activity-city" value="porto">Porto</label>
+                                <label class="city-option"><input type="radio" name="activity-city" value="coja">Côja</label>
+                                <label class="city-option"><input type="radio" name="activity-city" value="colares">Colares</label>
+                                <label class="city-option"><input type="radio" name="activity-city" value="comporta">Comporta</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-activity-btn">Ajouter</button>
+                    </form>
+                </div>
             </div>
         </section>
 
@@ -655,7 +736,7 @@
                     <div class="logo">
                         <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill="var(--primary-color)" />
-                            <span>ROADTREEP</span>
+                            <span>RODTREEP</span>
                     </div>
                     <p class="footer-desc">Rejoignez-nous pour vivre la plus belle aventure sur les routes. Des
                         souvenirs inoubliables partagés avec vous.</p>
@@ -682,7 +763,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2026 ROADTREEP. Tous droits réservés.</p>
+                <p>&copy; 2026 RODTREEP. Tous droits réservés.</p>
                 <div class="social-icons">
                     <a href="#">Fb</a>
                     <a href="#">Ig</a>
