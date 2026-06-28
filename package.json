@@ -1,0 +1,20 @@
+{
+  "name": "rodtreep",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/DCSALGADITO/RODTREEP#readme",
+  "bugs": {
+    "url": "https://github.com/DCSALGADITO/RODTREEP/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DCSALGADITO/RODTREEP.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
