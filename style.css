@@ -267,13 +267,11 @@ main,
 
 /* SECTIONS */
 .section {
-    min-height: 100vh;
     padding: 100px 2rem 4rem;
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
 #equipage {
@@ -281,9 +279,9 @@ main,
     max-width: none;
     margin: 0;
     padding: 100px 0 4rem 0;
-    /* Prend tout l'espace */
     position: relative;
-    /* Pour la vague SVG absolue */
+    min-height: 100vh;
+    justify-content: center;
 }
 
 /* SHAPE DIVIDER (Vague transition Hero -> Pokedex) */
@@ -310,7 +308,9 @@ main,
     /* Couleur de la section Hero qui "coule" sur le vert */
 }
 
-#equipage h2 {
+
+#equipage h2,
+#logements h2 {
     font-family: 'Jost', sans-serif;
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 800;
