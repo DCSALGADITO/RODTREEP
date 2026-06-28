@@ -1027,6 +1027,7 @@ main,
     pointer-events: none;
     user-select: none;
     -webkit-user-select: none;
+    touch-action: none;
 }
 
 /* En mode actif, le canvas intercepte tous les événements souris */

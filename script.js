@@ -410,6 +410,7 @@ try {
         div.appendChild(actions);
         // Mémoriser l'index pour pouvoir recréer le placeholder si suppression
         div.dataset.photoIndex = photoCount;
+        if (dbId) div.dataset.dbId = dbId; // Pour la suppression en temps réel
         canvas.appendChild(div);
 
         console.log('[RODTREEP] Photo ajoutée au canvas ✅ pos:', pos);
@@ -454,6 +455,40 @@ try {
     }
 
     loadPhotos();
+
+    // ── Temps Réel (Realtime Supabase) pour les Photos ────
+    if (db) {
+        db.channel('public-photos-changes')
+          .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'photos' }, payload => {
+              console.log('[RODTREEP] Nouvelle photo reçue en temps réel');
+              // Vérifie si elle n'est pas déjà dans le DOM (ajoutée localement)
+              if (!canvas.querySelector(`[data-db-id="${payload.new.id}"]`)) {
+                  addPhoto(payload.new.public_url, payload.new.id, payload.new.storage_path);
+              }
+          })
+          .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'photos' }, payload => {
+              console.log('[RODTREEP] Suppression photo reçue en temps réel');
+              const divToDel = canvas.querySelector(`[data-db-id="${payload.old.id}"]`);
+              if (divToDel) {
+                  const deletedLeft = divToDel.style.left;
+                  const deletedTop = divToDel.style.top;
+                  const deletedIndex = divToDel.dataset.photoIndex;
+                  divToDel.remove();
+                  
+                  // Recréer le placeholder
+                  if (deletedIndex) {
+                      const ph = document.createElement('div');
+                      ph.className = 'photo-placeholder';
+                      ph.style.left = deletedLeft;
+                      ph.style.top = deletedTop;
+                      ph.style.transform = 'translate(-50%,-50%)';
+                      ph.dataset.index = deletedIndex;
+                      canvas.appendChild(ph);
+                  }
+              }
+          })
+          .subscribe();
+    }
 
 })(); // fin initCanvas
 
@@ -882,6 +917,16 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.classList.remove('active');
         }
     });
+
+    // Temps Réel (Realtime Supabase)
+    if (db) {
+        db.channel('public-activities-changes')
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'activities' }, payload => {
+              console.log('[RODTREEP] Changement activité reçu en temps réel:', payload.eventType);
+              loadActivities(); // Recharge la liste propre depuis Supabase
+          })
+          .subscribe();
+    }
 
     // Init
     loadActivities();
