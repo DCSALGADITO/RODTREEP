@@ -182,30 +182,47 @@ try {
 
 
     // ── Drag du canvas ─────────────────────────────────────
-    wrapper.addEventListener('mousedown', (e) => {
+    const startDrag = (clientX, clientY, target) => {
         if (!active) return;
-        // Ne pas dragger depuis une photo ou un bouton d'action
-        if (e.target.closest('.photo-item')) return;
-        if (e.target.closest('.add-photo-placeholder')) return;
+        if (target.closest('.photo-item')) return;
+        if (target.closest('.add-photo-placeholder')) return;
         dragging = true;
         wrapper.style.cursor = 'grabbing';
-        ox = e.clientX - tx;
-        oy = e.clientY - ty;
-    });
+        ox = clientX - tx;
+        oy = clientY - ty;
+    };
 
-    window.addEventListener('mousemove', (e) => {
+    const doDrag = (clientX, clientY) => {
         if (!dragging) return;
-        tx = e.clientX - ox;
-        ty = e.clientY - oy;
+        tx = clientX - ox;
+        ty = clientY - oy;
         setTransform();
-    });
+    };
 
-    window.addEventListener('mouseup', () => {
+    const endDrag = () => {
         if (dragging) {
             dragging = false;
             wrapper.style.cursor = 'grab';
         }
-    });
+    };
+
+    // Souris
+    wrapper.addEventListener('mousedown', (e) => startDrag(e.clientX, e.clientY, e.target));
+    window.addEventListener('mousemove', (e) => doDrag(e.clientX, e.clientY));
+    window.addEventListener('mouseup', endDrag);
+
+    // Tactile
+    wrapper.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+            startDrag(e.touches[0].clientX, e.touches[0].clientY, e.target);
+        }
+    }, { passive: true });
+    window.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1) {
+            doDrag(e.touches[0].clientX, e.touches[0].clientY);
+        }
+    }, { passive: true });
+    window.addEventListener('touchend', endDrag);
 
     // ── Trackpad / scroll — capturé sur toute la section pour ne jamais rater un geste ──
     // On écoute sur la section ET sur le wrapper pour couvrir tous les éléments (photos, texte, etc.)

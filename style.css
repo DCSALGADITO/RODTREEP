@@ -29,6 +29,8 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 body {
@@ -37,6 +39,7 @@ body {
     color: var(--text-color);
     line-height: 1.6;
     overflow-x: hidden;
+    width: 100%;
 }
 
 /* NAVBAR / SIDEBAR */
@@ -1374,6 +1377,7 @@ main,
         display: flex;
         justify-content: center;
         align-items: center;
+        max-width: 100%;
     }
     .gear-svg {
         transform: rotate(90deg);
