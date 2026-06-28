@@ -108,6 +108,7 @@ body {
     list-style: none;
     gap: 1.5rem;
     width: 100%;
+    margin: auto 0; /* Centre le menu verticalement sur l'axe Y */
 }
 
 .nav-link {
