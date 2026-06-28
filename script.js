@@ -463,3 +463,112 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// ─── 6. CAROUSEL LOGEMENTS ───────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('logements-track');
+    const btnPrev = document.getElementById('logement-prev');
+    const btnNext = document.getElementById('logement-next');
+    const dotsContainer = document.getElementById('logements-dots');
+    
+    if (!track || !btnPrev || !btnNext || !dotsContainer) return;
+
+    const cards = Array.from(track.children);
+    let currentIndex = 0;
+    const totalCards = cards.length;
+
+    // Create dots
+    cards.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('logement-dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+    });
+
+    const dots = Array.from(dotsContainer.children);
+
+    function updateCarousel() {
+        // Move track
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        // Update dots
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+        
+        // Update buttons state
+        btnPrev.style.opacity = currentIndex === 0 ? '0.5' : '1';
+        btnPrev.style.cursor = currentIndex === 0 ? 'default' : 'pointer';
+        
+        btnNext.style.opacity = currentIndex === totalCards - 1 ? '0.5' : '1';
+        btnNext.style.cursor = currentIndex === totalCards - 1 ? 'default' : 'pointer';
+    }
+
+    function goToSlide(index) {
+        if (index < 0 || index >= totalCards) return;
+        currentIndex = index;
+        updateCarousel();
+    }
+
+    btnPrev.addEventListener('click', () => {
+        if (currentIndex > 0) goToSlide(currentIndex - 1);
+    });
+
+    btnNext.addEventListener('click', () => {
+        if (currentIndex < totalCards - 1) goToSlide(currentIndex + 1);
+    });
+
+    // Touch support for swiping
+    let startX = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
+    let isDragging = false;
+
+    track.addEventListener('touchstart', touchStart, { passive: true });
+    track.addEventListener('touchend', touchEnd);
+    track.addEventListener('touchmove', touchMove, { passive: true });
+
+    function touchStart(event) {
+        startX = event.touches[0].clientX;
+        isDragging = true;
+        
+        // Calculate px value of -currentIndex * 100%
+        const cardWidth = track.clientWidth;
+        prevTranslate = -currentIndex * cardWidth;
+        
+        track.style.transition = 'none';
+    }
+
+    function touchMove(event) {
+        if (!isDragging) return;
+        const currentX = event.touches[0].clientX;
+        const diff = currentX - startX;
+        currentTranslate = prevTranslate + diff;
+        track.style.transform = `translateX(${currentTranslate}px)`;
+    }
+
+    function touchEnd(event) {
+        isDragging = false;
+        track.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+        
+        const movedBy = currentTranslate - prevTranslate;
+        
+        // Threshold for swipe
+        if (movedBy < -50 && currentIndex < totalCards - 1) {
+            currentIndex += 1;
+        } else if (movedBy > 50 && currentIndex > 0) {
+            currentIndex -= 1;
+        }
+        
+        updateCarousel();
+    }
+
+    // Handle window resize for track width recalculation if needed
+    window.addEventListener('resize', () => {
+        updateCarousel();
+    });
+
+    // Initialize
+    updateCarousel();
+});

@@ -171,7 +171,7 @@
                             text-anchor="middle">
                             <!-- Top cities -->
                             <text x="100" y="25" font-weight="800">MONTPELLIER</text>
-                            <text x="300" y="25">SALAMANCA</text>
+                            <text x="300" y="25">SALAMANQUE</text>
                             <text x="500" y="25">CÔJA</text>
                             <text x="700" y="25">COMPORTA</text>
 
@@ -316,8 +316,318 @@
 
         <section id="logements" class="section">
             <h2 style="margin-bottom: 2rem;">LOGEMENTS</h2>
-            <div class="content-placeholder">
-                <p>Nos petits cocons pour se reposer.</p>
+            <div class="logements-carousel-container">
+                <button class="logement-nav-btn prev-btn" id="logement-prev" aria-label="Logement précédent">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+
+                <div class="logements-track-wrapper">
+                    <div class="logements-track" id="logements-track">
+                        <!-- Logement 1 -->
+                        <div class="logement-card">
+                            <div class="logement-image">
+                                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80"
+                                    alt="Appartement Barcelone">
+                            </div>
+                            <div class="logement-info">
+                                <div class="logement-header">
+                                    <h3 class="logement-title">Résidence Universitaire · TERRASSA</h3>
+                                    <p class="logement-subtitle">31 juil. – 1 août</p>
+                                </div>
+                                <div class="logement-price">
+                                    <span class="price-value">153,70 €</span> <span class="price-unit">/ nuit</span>
+                                </div>
+                                <p class="logement-times">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    Arrivée entre 14:00 - 22:00 • Départ avant 11:00
+                                </p>
+                                <a href="https://maps.google.com" target="_blank" class="logement-address"
+                                    title="Voir sur Maps">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    44 Carrer de Ramón y Cajal, Terrassa, Espagne
+                                </a>
+                                <a href="https://www.booking.com/hotel/es/residencia-universitaria-francesc-giralt-i-serra.fr.html?aid=852793&label=msn-Qt7Lw3TsUPyRcD6TZjSLNg-80264526540626%3Atikwd-80264676763644%3Aloc-66%3Aneo%3Amte%3Alp126684%3Adec%3Acid578675781%3Aagid1284230204327398%3Aclkid1020b442d4fc11c485b7de755ff901fc&sid=383cfee75d0d143a1cec01f28ee725de&all_sr_blocks=600569306_235480920_2_0_0_311132%2C600569306_235480920_2_0_0_311132%2C600569306_235480920_2_0_0_311132&checkin=2026-07-31&checkout=2026-08-01&dest_id=-372490&dest_type=city&dist=0&group_adults=6&group_children=0&hapos=8&highlighted_blocks=600569306_235480920_2_0_0_311132%2C600569306_235480920_2_0_0_311132%2C600569306_235480920_2_0_0_311132&hpos=8&matching_block_id=600569306_235480920_2_0_0_311132&nflt=price%3DEUR-min-250-1%3Bht_id%3D203&no_rooms=1&req_adults=6&req_children=0&room1=A%2CA%2CA%2CA%2CA%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=600569306_235480920_2_0_0_311132_5701%2C600569306_235480920_2_0_0_311132_5701%2C600569306_235480920_2_0_0_311132_5701&srepoch=1782027497&srpvid=47ef316a70d8022d&type=total&ucfs=1&chal_t=1782635565416&force_referer="
+                                    target="_blank" class="logement-booking-link" title="Voir l'annonce">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                                    </svg>
+                                    Voir l'annonce
+                                </a>
+                                <a href="https://www.google.com/maps/dir/?api=1&destination=44+Carrer+de+Ram%C3%B3n+y+Cajal,+08222+Terrassa,+Barcelona,+Spain&travelmode=driving"
+                                    target="_blank" class="logement-parking-btn"
+                                    title="Voir les parkings à proximité">P</a>
+                            </div>
+                        </div>
+
+                        <!-- Logement 2 -->
+                        <div class="logement-card">
+                            <div class="logement-image">
+                                <img src="https://images.unsplash.com/photo-1502672260266-1c1c2c410bf3?w=800&q=80"
+                                    alt="Loft Salamanque">
+                            </div>
+                            <div class="logement-info">
+                                <div class="logement-header">
+                                    <h3 class="logement-title">Airbnb · SALAMANQUE</h3>
+                                    <p class="logement-subtitle">1 août – 2 août</p>
+                                </div>
+                                <div class="logement-price">
+                                    <span class="price-value">155 €</span> <span class="price-unit">/ nuit</span>
+                                </div>
+                                <p class="logement-times">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    Arrivée entre 15:00 et 00:00 • Départ avant 11:00
+                                </p>
+                                <a href="https://www.google.com/maps/dir/?api=1&destination=8+Calle+de+la+Asaderia,+37008+Salamanca,+Spain&travelmode=driving"
+                                    target="_blank" class="logement-address" title="Voir sur Maps">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    8 Calle de la Asadería, Salamanque, Espagne
+                                </a>
+                                <a href="https://www.airbnb.fr/rooms/1711526043034889179?photo_id=2687566886&source_impression_id=p3_1782635759_P3QJXGcK3mzn-G_s&previous_page_section_name=1000"
+                                    target="_blank" class="logement-booking-link" title="Voir l'annonce">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                                    </svg>
+                                    Voir l'annonce
+                                </a>
+                                <a href="https://www.google.com/maps/dir/?api=1&destination=8+Calle+de+la+Asaderia,+37008+Salamanca,+Spain&travelmode=driving"
+                                    target="_blank" class="logement-parking-btn"
+                                    title="Voir les parkings à proximité">P</a>
+                            </div>
+                        </div>
+
+                        <!-- Logement 3 -->
+                        <div class="logement-card">
+                            <div class="logement-image">
+                                <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80"
+                                    alt="Maison Porto">
+                            </div>
+                            <div class="logement-info">
+                                <div class="logement-header">
+                                    <h3 class="logement-title">Auberge de jeunesse · Porto</h3>
+                                    <p class="logement-subtitle">2 août – 3 août</p>
+                                </div>
+                                <div class="logement-price">
+                                    <span class="price-value">152 €</span> <span class="price-unit">/ nuit</span>
+                                </div>
+                                <p class="logement-times">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    Arrivée à 16:00 • Départ à 12:00*
+                                </p>
+                                <a href="https://maps.google.com/maps/dir/?api=1&destination=23+Rua+Escura,+4050-131+Porto,+Portugal&travelmode=driving"
+                                    target="_blank" class="logement-address" title="Voir sur Maps">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    23 Rua Escura, Porto, Portugal
+                                </a>
+                                <a href="https://www.booking.com/hotel/pt/the-green-heart-hostel.fr.html?label=msn-Qt7Lw3TsUPyRcD6TZjSLNg-41682158592725%3Atikwd-41682265138024%3Aloc-66%3Aneo%3Amte%3Alp126684%3Adec%3Acid578675781%3Aagid1284230204327398%3Aclkid13736b5f340c13f444a87f4d46de70a3&sid=83d0d23a5886c9b7409b151b8cf25d51&all_sr_blocks=704977354_463571984_0_311132%2C704977354_463571984_0_311132&checkin=2026-08-02&checkout=2026-08-03&dest_id=456585&dest_type=city&dist=0&group_adults=1&group_children=0&hapos=7&highlighted_blocks=704977354_463571984_0_311132%2C704977354_463571984_0_311132&hpos=7&matching_block_id=704977354_463571984_0_311132&nflt=price%3DEUR-min-150-1%3Bht_id%3D203&no_rooms=1&req_adults=1&req_children=0&room1=A&sb_price_type=total&sr_order=popularity&sr_pri_blocks=704977354_463571984_0_311132_5701&srepoch=1782635890&srpvid=f1f4ce5ee42205eb&type=total&ucfs=1&chal_t=1782635891276&force_referer="
+                                    target="_blank" class="logement-booking-link" title="Voir l'annonce">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                                    </svg>
+                                    Voir l'annonce
+                                </a>
+                                <a href="https://maps.google.com/maps/dir/?api=1&destination=23+Rua+Escura,+4050-131+Porto,+Portugal&travelmode=driving"
+                                    target="_blank" class="logement-parking-btn"
+                                    title="Voir les parkings à proximité">P</a>
+                            </div>
+                        </div>
+
+                        <!-- Logement 4 -->
+                        <div class="logement-card">
+                            <div class="logement-image">
+                                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80"
+                                    alt="Camping · Côja">
+                            </div>
+                            <div class="logement-info">
+                                <div class="logement-header">
+                                    <h3 class="logement-title">Camping · Côja</h3>
+                                    <p class="logement-subtitle">3 août – 5 août</p>
+                                </div>
+                                <div class="logement-price">
+                                    <span class="price-value">50 €</span> <span class="price-unit">/ nuit</span>
+                                </div>
+                                <p class="logement-times">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    Arrivée à 15:00 • Départ à 11:00*
+                                </p>
+                                <a href="https://maps.google.com/maps/dir/?api=1&destination=Praia+Fluvial+do+Caneiro,+Côja,+Portugal&travelmode=driving"
+                                    target="_blank" class="logement-address" title="Voir sur Maps">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    Praia Fluvial do Caneiro, Côja
+                                </a>
+                                <a href="https://airbnb.com" target="_blank" class="logement-booking-link"
+                                    title="Voir l'annonce">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                                    </svg>
+                                    Voir l'annonce
+                                </a>
+                                <a href="https://maps.google.com" target="_blank" class="logement-parking-btn"
+                                    title="Voir les parkings à proximité">P</a>
+                            </div>
+                        </div>
+
+                        <!-- Logement 5 -->
+                        <div class="logement-card">
+                            <div class="logement-image">
+                                <img src="https://images.unsplash.com/photo-1449844908441-8829872d2607?w=800&q=80"
+                                    alt="Chambre Sintra">
+                            </div>
+                            <div class="logement-info">
+                                <div class="logement-header">
+                                    <h3 class="logement-title">Gîte · Colares</h3>
+                                    <p class="logement-subtitle">5 août – 6 août</p>
+                                </div>
+                                <div class="logement-price">
+                                    <span class="price-value">143 €</span> <span class="price-unit">/ nuit</span>
+                                </div>
+                                <p class="logement-times">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    Arrivée à 15:00 • Départ à 11:00
+                                </p>
+                                <a href="https://maps.app.goo.gl/6b6oK51s1k3pLqH2A" target="_blank"
+                                    class="logement-address" title="Voir sur Maps">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    Rodízio, Colares, Portugal
+                                </a>
+                                <a href="https://www.airbnb.fr/rooms/43100576?photo_id=1001427816&source_impression_id=p3_1782636500_P3McXJoUvi1QHM73&previous_page_section_name=1000"
+                                    target="_blank" class="logement-booking-link" title="Voir l'annonce">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                                    </svg>
+                                    Voir l'annonce
+                                </a>
+                                <a href="https://maps.google.com" target="_blank" class="logement-parking-btn"
+                                    title="Voir les parkings à proximité">P</a>
+                            </div>
+                        </div>
+
+                        <!-- Logement 6 -->
+                        <div class="logement-card">
+                            <div class="logement-image">
+                                <img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?w=800&q=80"
+                                    alt="Suite Elvas">
+                            </div>
+                            <div class="logement-info">
+                                <div class="logement-header">
+                                    <h3 class="logement-title">Camping · Comporta</h3>
+                                    <p class="logement-subtitle">6 août – 7 août</p>
+                                </div>
+                                <div class="logement-price">
+                                    <span class="price-value">90,15 €</span> <span class="price-unit">/ nuit</span>
+                                </div>
+                                <p class="logement-times">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    Arrivée à 14:00 • Départ à 12:00*
+                                </p>
+                                <a href="https://www.google.com/maps/place/Orbitur+Camping+Park+-+Sitava+Milfontes/@37.7807186,-8.7891404,11.24z/data=!4m9!3m8!1s0xd1ba340a76bee49:0x3b0fddb6b7f1ffa6!5m2!4m1!1i2!8m2!3d37.7799672!4d-8.7837726!16s%2Fg%2F1tcym9jn?entry=ttu&g_ep=EgoyMDI2MDYyNC4wIKXMDSoASAFQAw%3D%3D"
+                                    target="_blank" class="logement-address" title="Voir sur Maps">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    Parque de Campismo Orbitur, Comporta, Portugal
+                                </a>
+                                <a href="https://airbnb.com" target="_blank" class="logement-booking-link"
+                                    title="Voir l'annonce">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                                    </svg>
+                                    Voir l'annonce
+                                </a>
+                                <a href="https://maps.google.com" target="_blank" class="logement-parking-btn"
+                                    title="Voir les parkings à proximité">P</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="logement-nav-btn next-btn" id="logement-next" aria-label="Logement suivant">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="logements-dots" id="logements-dots">
+                <!-- Dots generated by JS -->
+            </div>
+
+            <div class="tentes-container">
+                <div class="tente-item">
+                    <img src="accessoires/Tente42.png" alt="Tente 4 Places">
+                    <h3 class="tente-title">TENTE 4 PLACES</h3>
+                </div>
+                <div class="tente-item">
+                    <img src="accessoires/Tente3P.png" alt="Tente 3 Places">
+                    <h3 class="tente-title">TENTE 3 PLACES</h3>
+                </div>
             </div>
         </section>
 
